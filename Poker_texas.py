@@ -1,3 +1,17 @@
+def check_hands(cards):
+    if len(cards) != 14:
+        return False
+    if cards[2] != " " or cards[5] != " " or cards[8] != " " or cards[11] != " ":
+        return False
+    for i in range(len(cards) // 3 + 1):
+        if cards[i * 3] not in "0123456789TJQKAtjqka" or cards[i * 3 + 1] not in "DSHCdshc":
+            return False
+    card_list = cards.split(" ")
+    for card in card_list:
+        if card_list.count(card) == 2:
+            return False
+
+    return True
 
 
 def hand_to_numeric(cards):
@@ -137,8 +151,14 @@ def get_kind(hand):
 
 # 两手牌对比
 def compare_hands(cardblack, cardwhite):
-    handwhite = hand_to_numeric(cardwhite)
-    handblack = hand_to_numeric(cardblack)
+    if check_hands(cardwhite):
+        handwhite = hand_to_numeric(cardwhite)
+    else:
+        return False
+    if check_hands(cardblack):
+        handblack = hand_to_numeric(cardblack)
+    else:
+        return False
     (levelwhite, listwhite) = get_kind(handwhite)
     (levelblack, listblack) = get_kind(handblack)
     if levelblack > levelwhite:

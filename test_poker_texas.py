@@ -2,6 +2,15 @@ import pytest
 import Poker_texas as pt
 
 
+def test_check_hands():
+    assert pt.check_hands("2s 3c 4d 5h 6S") == True
+    assert pt.check_hands("2s 3c 4d 5h") == False
+    assert pt.check_hands("2s3c4d5h") == False
+    assert pt.check_hands("2s_3c_4d 5h 6S") == False
+    assert pt.check_hands("2s 3f dh 4e 8m") == False
+    assert pt.check_hands("2s 3c 4d 5h 5h") == False
+
+
 def test_hand_to_numeric():
     assert pt.hand_to_numeric("2s 3c 4d 5h 6S") == \
         [[4, 1], [3, 2], [2, 0], [1, 3], [0, 1]]
