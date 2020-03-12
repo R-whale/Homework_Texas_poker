@@ -28,7 +28,6 @@ def hand_to_numeric(cards):
     return card_list
 
 
-# 同花色
 def check_flush(hand):
     hand_suit = [hand[0][1], hand[1][1], hand[2][1], hand[3][1], hand[4][1]]
     for i in range(4):
@@ -37,7 +36,6 @@ def check_flush(hand):
     return False, [13, 13, 13, 13, 13]
 
 
-# 顺子
 def check_straight(hand):
     if hand[0][0] == (hand[1][0]+1) == (hand[2][0]+2) == (hand[3][0]+3) == (hand[4][0]+4):
         return True, [hand[0][0]]
@@ -46,14 +44,12 @@ def check_straight(hand):
     return False, [13]
 
 
-# 同花顺
 def check_flush_straight(hand):
     if check_flush(hand)[0] and check_straight(hand)[0]:
         return True, [hand[0][0]]
     return False, [13]
 
 
-# 铁支
 def check_fourofakind(hand):
     hand_rank = [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
     for quad_card in range(13):
@@ -64,7 +60,6 @@ def check_fourofakind(hand):
     return False, [13]
 
 
-# 葫芦
 def check_fullhouse(hand):
     hand_rank = [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
     for trip_card in range(13):
@@ -75,7 +70,6 @@ def check_fullhouse(hand):
     return False, [13]
 
 
-# 三条
 def check_threeofakind(hand):
     hand_rank = [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
     for trip_card in range(13):
@@ -88,7 +82,6 @@ def check_threeofakind(hand):
     return False, [13]
 
 
-# 两对
 def check_twopair(hand):
     hand_rank = [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
     for pair_card_low in range(13):
@@ -101,7 +94,6 @@ def check_twopair(hand):
     return False, [13, 13, 13]
 
 
-# 一对
 def check_onepair(hand):
     hand_rank = [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
     for pair_card in range(13):
@@ -116,7 +108,6 @@ def check_onepair(hand):
     return False, [13, 13, 13, 13]
 
 
-# 散牌
 def check_scattered(hand):
     if check_flush_straight(hand)[0] or check_fourofakind(hand)[0] or check_fullhouse(hand)[0] or\
             check_flush(hand)[0] or check_straight(hand)[0] or check_threeofakind(hand)[0] or\
@@ -125,7 +116,6 @@ def check_scattered(hand):
     return True, [hand[0][0], hand[1][0], hand[2][0], hand[3][0], hand[4][0]]
 
 
-# 对比
 def compare_list(lis1, lis2):
     if lis1 == lis2:
         return 0
@@ -135,9 +125,7 @@ def compare_list(lis1, lis2):
         return 2
 
 
-# 判断牌的类型
 def get_kind(hand):
-    # 同花顺＞铁支＞葫芦＞同花＞顺子＞三条＞两对＞对子＞散牌
     if check_flush_straight(hand)[0]:return 8,check_flush_straight(hand)[1]
     if check_fourofakind(hand)[0]:return 7,check_fourofakind(hand)[1]
     if check_fullhouse(hand)[0]:return 6,check_fullhouse(hand)[1]
@@ -149,7 +137,6 @@ def get_kind(hand):
     if check_scattered(hand)[0]:return 0,check_scattered(hand)[1]
 
 
-# 两手牌对比
 def compare_hands(cardblack, cardwhite):
     if check_hands(cardwhite):
         handwhite = hand_to_numeric(cardwhite)
@@ -168,9 +155,9 @@ def compare_hands(cardblack, cardwhite):
     if levelwhite == levelblack:
         if compare_list(listwhite, listblack) == 1:
             return "White wins"
-        if compare_list(listwhite, listblack) == 2:
+        elif compare_list(listwhite, listblack) == 2:
             return "Black wins"
-        if compare_list(listwhite, listblack) == 0:
+        else:
             return "Tie"
 
 
